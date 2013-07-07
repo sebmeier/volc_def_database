@@ -17,6 +17,7 @@ XML etc.) on the resulting data is undertaken.
 """
 
 import re
+import datetime
 
 class Volcano:
     """ A container and processor for volcano defomation """
@@ -134,6 +135,15 @@ class Volcano:
                         elif keyword=="DESCRIPTION":
                             self.studies[-1].description = self.description+value
                             continue
+                        elif keyword=="STARTDATE":
+                            (d, m, y) = value.split('/',3)
+                            self.studies[-1].startdate = datetime.date(int(y), int(m), int(d))
+                            print self.studies[-1].startdate
+                            continue
+                        elif keyword=="ENDDATE":
+                            (d, m, y) = value.split('/',3)
+                            self.studies[-1].enddate = datetime.date(int(y), int(m), int(d))
+                            continue
                  
                     elif section_name == "EVENT":
                         if keyword=="TYPE":
@@ -143,6 +153,14 @@ class Volcano:
                                 raise Exception("Double study type")
                         elif keyword=="DESCRIPTION":
                             self.event[-1].description = self.description+value
+                            continue
+                        elif keyword=="STARTDATE":
+                            (d, m, y) = value.split('/',3)
+                            self.event[-1].startdate = datetime.date(int(y), int(m), int(d))
+                            continue
+                        elif keyword=="ENDDATE":
+                            (d, m, y) = value.split('/',3)
+                            self.event[-1].enddate = datetime.date(int(y), int(m), int(d))
                             continue
                  
                     else:
@@ -176,6 +194,10 @@ class Volcano:
             print "Type: " + event.type
             if event.description != "":
                 print "Description: " + event.description
+            if event.startdate is not None:
+                print "Startdate: " + event.startdate.strftime('%d/%m/%Y')
+            if study.enddate is not None:
+                print "Enddate: " + event.enddate.strftime('%d/%m/%Y')
             print "[End event]"
 
         for study in self.studies:
@@ -183,6 +205,10 @@ class Volcano:
             print "Type: " + study.type
             if study.description != "":
                 print "Description: " + study.description
+            if study.startdate is not None:
+                print "Startdate: " + study.startdate.strftime('%d/%m/%Y')
+            if study.enddate is not None:
+                print "Enddate: " + study.enddate.strftime('%d/%m/%Y')
             print "[End study]"
 
 class Event:

@@ -5,8 +5,8 @@ Name: Wibble
 ROCKType: Rhyolite
 [Start Study]
 Type: InSAR
-StartDate: 1/1/2000
-EndDate: 30/3/2000
+StartDate: 01/01/2000
+EndDate: 30/03/2000
 Reference: doi:10.slsk
 [End Study]
 [Start Study]
