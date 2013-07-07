@@ -141,7 +141,6 @@ class Volcano:
                         elif keyword=="STARTDATE":
                             (d, m, y) = value.split('/',3)
                             self.studies[-1].startdate = datetime.date(int(y), int(m), int(d))
-                            print self.studies[-1].startdate
                             continue
                         elif keyword=="ENDDATE":
                             (d, m, y) = value.split('/',3)
@@ -227,6 +226,67 @@ class Volcano:
         for reference in self.references:
             print "Reference: " + reference
 
+    def html(self):
+        head = """<html><head>
+        <title>{name}</title>
+        </head>
+        <body>
+        <h1>{name}</h1>
+        <ul>
+        <li>ID: {id}</li>
+        <li>Latitude: {lat}</li>
+        <li>Longitude: {lon}</li>
+        <li>Rock type: {rock}</li>
+        </ul>
+        <p>{description}</p>
+        """.format(name=self.name, id=self.id, lat=self.latitude, 
+                   lon=self.longitude, rock=self.rocktype,
+                    description=self.description)
+
+        volc_refs = "<h2>References</h2><ul>"
+        for reference in self.references:
+            volc_refs = volc_refs + "<li>{ref}</li>".format(ref=reference)
+        volc_refs = volc_refs+"</ul>"
+
+        studies = "<h2>studies</h2>"
+        for study in self.studies:
+            # Do we need to give studies names?
+            studies = studies+"""<h3>A study</h3>
+                                 <ul>
+                                 <li>{type}</li>
+                                 <li>{start}</li>
+                                 <li>{end}</li>
+                                 </ul>
+                                 <p>{desc}</p>""".format(type=study.type,
+                                 start=str(study.startdate), 
+                                 end=str(study.enddate), 
+                                 desc=study.description)
+            studies = studies+"<h4>References</h4><ul>"
+            for reference in study.references:
+                studies = studies + "<li>{ref}</li>".format(ref=reference)
+            studies = studies+"</ul>"
+
+        events = "<h2>Events</h2>"
+        for event in self.events:
+            # Do we need to give events names?
+            events = events+"""<h3>An event</h3>
+                                 <ul>
+                                 <li>{type}</li>
+                                 <li>{start}</li>
+                                 <li>{end}</li>
+                                 </ul>
+                                 <p>{desc}</p>""".format(type=event.type,
+                                 start=str(event.startdate), 
+                                 end=str(event.enddate), 
+                                 desc=event.description)
+            eventss = eventss+"<h4>References</h4><ul>"
+            for reference in event.references:
+                events = events + "<li>{ref}</li>".format(ref=reference)
+            events = events+"</ul>"
+
+        tail = "</body></html>"
+        return head+events+studies+volc_refs+tail
+
 class Event:
     "Something that happened to a volcano"
 
@@ -256,6 +316,8 @@ if __name__=="__main__":
         volcano = Volcano(filename=file)
         if mode == "dump":
             volcano.dump()
+        if mode == "html":
+            print volcano.html()
               
 
     
