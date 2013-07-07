@@ -1,0 +1,21 @@
+ID: 123456
+Latitude: 10
+Longitude: -172.2
+Name: Wibble
+ROCKType: Rhyolite
+[Start Study]
+Type: InSAR
+StartDate: 1/1/2000
+EndDate: 30/3/2000
+Reference: doi:10.slsk
+[End Study]
+[Start Study]
+Type: GPS
+Description: This study did not publish any data
+[End Study]
+Description: >>
+This is a made up volcano
+Which I described over
+three line 
+Description: <<
+
