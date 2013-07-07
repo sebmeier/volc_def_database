@@ -3,6 +3,7 @@ Latitude: 10
 Longitude: -172.2
 Name: Wibble
 ROCKType: Rhyolite
+Reference: doi:10.slsk
 [Start Study]
 Type: InSAR
 StartDate: 01/01/2000

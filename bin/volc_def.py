@@ -123,6 +123,9 @@ class Volcano:
                         elif keyword=="DESCRIPTION":
                             self.description = self.description+value
                             continue
+                        elif keyword=="REFERENCE":
+                            self.references.append(value)
+                            continue
                         else:
                             # Don't recognise this - skip
                             continue
@@ -144,6 +147,9 @@ class Volcano:
                             (d, m, y) = value.split('/',3)
                             self.studies[-1].enddate = datetime.date(int(y), int(m), int(d))
                             continue
+                        elif keyword=="REFERENCE":
+                            self.studies[-1].references.append(value)
+                            continue
                  
                     elif section_name == "EVENT":
                         if keyword=="TYPE":
@@ -161,6 +167,9 @@ class Volcano:
                         elif keyword=="ENDDATE":
                             (d, m, y) = value.split('/',3)
                             self.event[-1].enddate = datetime.date(int(y), int(m), int(d))
+                            continue
+                        elif keyword=="REFERENCE":
+                            self.event[-1].references.append(value)
                             continue
                  
                     else:
@@ -198,6 +207,8 @@ class Volcano:
                 print "Startdate: " + event.startdate.strftime('%d/%m/%Y')
             if study.enddate is not None:
                 print "Enddate: " + event.enddate.strftime('%d/%m/%Y')
+            for reference in event.references:
+                print "Reference: " + reference
             print "[End event]"
 
         for study in self.studies:
@@ -209,7 +220,12 @@ class Volcano:
                 print "Startdate: " + study.startdate.strftime('%d/%m/%Y')
             if study.enddate is not None:
                 print "Enddate: " + study.enddate.strftime('%d/%m/%Y')
+            for reference in study.references:
+                print "Reference: " + reference
             print "[End study]"
+
+        for reference in self.references:
+            print "Reference: " + reference
 
 class Event:
     "Something that happened to a volcano"
@@ -220,6 +236,7 @@ class Event:
         self.reference = None
         self.startdate = None
         self.enddate = None
+        self.references = []
 
 class Study:
     "An observation of volcanic deformation"
@@ -230,6 +247,7 @@ class Study:
         self.reference = None
         self.startdate = None
         self.enddate = None
+        self.references = []
             
 if __name__=="__main__":
     import sys
